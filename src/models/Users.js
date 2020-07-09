@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Post = mongoose.Schema({
+const User = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -23,9 +23,13 @@ const Post = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    budget: {
+        type: Number,
+        default: 0
+    },
 });
 
-module.exports = mongoose.model('User', Post);
+module.exports = mongoose.model('User', User);
 
 //WajPSWaNiGFAPlcn
 //rootpassword190
