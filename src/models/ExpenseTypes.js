@@ -10,7 +10,11 @@ const ExpenseType = mongoose.Schema({
     category: {
         type: String,
         required: true,
-    }
+    },
+    user: {
+        type: String,
+        required: true,
+    },
 });
 
 module.exports = mongoose.model('ExpenseType', ExpenseType);

@@ -17,8 +17,16 @@ const validLog = (body) => {
     return schema.validate(body);
 }
 
+const validCat = (body) => {
+    const schema = Joi.object({
+        name: Joi.string().min(1).max(50).required(),
+    });
+    return schema.validate(body);
+}
+
 module.exports.validReg = validReg;
 module.exports.validLog = validLog;
+module.exports.validCat = validCat;
 
 /*
 

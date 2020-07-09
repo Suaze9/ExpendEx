@@ -13,7 +13,11 @@ const Expense = mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    user: {
+        type: String,
+        required: true,
+    },
 });
 
 module.exports = mongoose.model('Expense', Expense);

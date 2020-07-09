@@ -15,10 +15,12 @@ app.use(bodyParser.json());
 
 const auth = require('./src/routes/auth');
 const expenses = require('./src/routes/expenses');
+const categories = require('./src/routes/categories');
 
 
 app.use('/api/auth', auth);
 app.use('/api/expenses', expenses);
+app.use('/api/categories', categories);
 
 
 mongoose.connect(process.env.MNG_CREDENTIALS, { useUnifiedTopology: true, useNewUrlParser: true }, ()=>{
