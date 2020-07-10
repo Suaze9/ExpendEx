@@ -51,7 +51,7 @@ router.post('/', validate, async (req, res) => {
 
     const valid = validType(body);
     if(valid.error){
-        res.status(400).send(error.details[0].message);
+        res.status(400).send(valid.error.details[0].message);
         return;
     }
 
@@ -88,7 +88,7 @@ router.put('/p/:id', validate, async (req, res) => {
 
     const valid = validType(body);
     if(valid.error){
-        res.status(400).send(error.details[0].message);
+        res.status(400).send(valid.error.details[0].message);
         return;
     }
 

@@ -46,7 +46,7 @@ router.post('/login', async (req, res) =>{
 
     const valid = validLog(body);
     if(valid.error){
-        res.status(400).send(error.details[0].message);
+        res.status(400).send(valid.error.details[0].message);
         return;
     }
 
