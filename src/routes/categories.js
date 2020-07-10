@@ -45,6 +45,29 @@ router.get('/p/:id', validate, async (req, res) => {
 
 })
 
+router.delete('/p/:id', validate, async (req, res) => {
+    const findId = req.params.id;
+
+    if(!isValidObjectId(findId)){
+        res.status(400).send('Invalid id');
+        return;
+    }
+
+    const cat = await Categories.deleteOne({ _id: findId, user: req.auth._id});
+    if(!cat){
+        res.status(500).send('Internal Error...');
+        return;
+    }
+
+    if(cat.n === 0){
+        res.status(404).send('Category not found');
+        return;
+    }
+
+    res.status(200).send({deleted: findId});
+
+})
+
 router.post('/', validate, (req, res) => {
     const body = req.body;
 
