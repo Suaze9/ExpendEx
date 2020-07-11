@@ -131,11 +131,16 @@ router.put('/p/:id', validate, async (req, res) => {
         res.status(404).send('ExpenseType not found');
         return;
     }
+    const oldCat = updateType.category;
+    let catChange = updateType.category !== body.category;
     
     updateType.set(body);
     
     updateType.save().then((type)=>{
         res.status(200).send({expenseType: { id: type._id, name: type.name, category: type.category}});
+        if(catChange){
+            Categories.updateOne({_id: oldCat}, { $inc: { size: -1 } });
+        }
     }).catch((err)=>{
         res.status(400).send(err);
     });
