@@ -2,6 +2,7 @@ const webtoken = require('jsonwebtoken');
 
 const validate = (req, res, next) => {
     const token = req.header('auth');
+    console.log(req);
     
     if(!token){
         res.status(401).send('Access Denied: No Authentication');

@@ -6,11 +6,15 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import NavBar from './Components/Navbar';
 import Home from './Views/Home'
+import Login from './Views/Login'
 
 function App() {
   return (
     <Router basename="/">
       <Switch>
+        <Route path="/login">
+          <Login/>
+        </Route>
         <Route path="/">
           <NavBar className="navContainer">
             <Home/>
