@@ -18,8 +18,6 @@ router.get('/', validate, async (req, res) => {
 
     const expArr = [];
 
-    console.log(exps);
-
     exps.forEach((exp)=>{
         expArr.push({ id: exp._id, cost: exp.cost, type: exp.type});
     })
@@ -55,7 +53,6 @@ router.delete('/p/:id', validate, async (req, res) => {
     }
 
     const exp = await Expenses.deleteOne({ _id: findId, user: req.auth._id});
-    console.log(exp);
     if(!exp){
         res.status(500).send('Internal Error...');
         return;

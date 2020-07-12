@@ -17,8 +17,6 @@ router.get('/', validate, async (req, res) => {
 
     const catArr = [];
 
-    console.log(cats);
-
     cats.forEach((cat)=>{
         catArr.push({ id: cat._id, name: cat.name, size: cat.size});
     })
