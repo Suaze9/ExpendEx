@@ -18,8 +18,6 @@ router.get('/', validate, async (req, res) => {
 
     const typeArr = [];
 
-    console.log(types);
-
     types.forEach((type)=>{
         typeArr.push({ id: type._id, name: type.name, category: type.category});
     })

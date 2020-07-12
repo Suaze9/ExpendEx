@@ -33,7 +33,8 @@ router.post('/register', async (req, res) =>{
 
     newUser.save()
         .then((user)=>{
-            res.status(200).send({id: user._id});
+            const token =  webtoken.sign({ _id: user._id}, process.env.AUTH_KEY);
+            res.status(200).send({id: user._id, name: body.name, jwt: token });
         })
         .catch((err)=>{
             res.status(400).send(err);
@@ -62,8 +63,8 @@ router.post('/login', async (req, res) =>{
         return;
     }
     
-    const token =  webtoken.sign({ _id: user._id}, process.env.AUTH_KEY, {expiresIn: "2d"});
-    res.status(200).header('auth', token).send(token);
+    const token =  webtoken.sign({ _id: user._id}, process.env.AUTH_KEY);
+    res.status(200).header('auth', token).send({ name: user.name, jwt: token});
 });
 
 module.exports = router;

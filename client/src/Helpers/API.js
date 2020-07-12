@@ -11,3 +11,5 @@ export const setToken = (jwt) => {
     return config;    
   });
 };
+
+export default API;
