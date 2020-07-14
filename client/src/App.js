@@ -10,7 +10,6 @@ import NavBar from './Components/Navbar';
 import Home from './Views/Home'
 import Login from './Views/Login'
 import Signup from './Views/Signup';
-import { Spinner } from 'react-bootstrap';
 import Expenses from './Views/Expenses';
 
 

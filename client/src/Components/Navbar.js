@@ -20,7 +20,7 @@ const NavBar = (props) => {
             <NV.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/stats">Stats</Nav.Link>    
+                <Nav.Link href="/expenses">Manage Expenses</Nav.Link>    
               </Nav>
               <Nav>
                 <Nav.Link href="/login" onClick={removeToken}>Log-out</Nav.Link>

@@ -4,7 +4,6 @@ import { getTotalNested, postType, postCategory, deleteCategory, deleteType } fr
 
 import '../Styles/CategoryBar.css';
 import ExpenseTypeModal from './ExpenseTypeModal';
-import { useLocation } from 'react-router-dom';
 
 const CategoryBarModify = () => {
 

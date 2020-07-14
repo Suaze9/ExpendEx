@@ -40,8 +40,16 @@ const validExp = (body) => {
     return schema.validate(body);
 }
 
+const validBudget = (body) => {
+    const schema = Joi.object({
+        budget: Joi.number().required(),
+    });
+    return schema.validate(body);
+}
+
 module.exports.validReg = validReg;
 module.exports.validLog = validLog;
 module.exports.validCat = validCat;
 module.exports.validType = validType;
-module.exports.validExp =validExp;
+module.exports.validExp = validExp;
+module.exports.validBudget = validBudget;

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Container, Card, Form, FormGroup, Button, Row, Spinner } from 'react-bootstrap'
 import '../Styles/Signup.css';
 
-import API from '../Helpers/API'
+import API, { setToken as st } from '../Helpers/API'
 import { setToken, logged } from '../Helpers/Session';
 
 const defaultUser = {
@@ -38,8 +38,9 @@ const Signup = () => {
 
     API.post('/auth/register', body)
       .then((res)=>{
+        st(res.data.jwt);
         setToken(res.data.jwt, res.data.name, userCreds.persist);
-        API.setToken(res.data.jwt);
+        window.location.refres();
       })
       .catch((err)=>{
         let error = {};

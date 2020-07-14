@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Modal, ModalTitle, ModalBody, ModalFooter, Table, Button, Form, FormGroup } from 'react-bootstrap'
+import { Modal, ModalBody, ModalFooter, Table, Button, Form, FormGroup } from 'react-bootstrap'
 
 import { getExpenses, postExpense, deleteExpense } from '../Helpers/API';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
@@ -20,34 +20,16 @@ const ExpenseTypeModal = (props) => {
 
   useEffect(()=>{
     if(modal){
-      switch(expenses.filter){
-        case "month": {
-          
-          getExpenses('month', expenseType.id)
-            .then((res)=>{
-              console.log(res.data.expenses)
-              setExpense((prevState)=>({...prevState, list: res.data.expenses}));
-            })
-            .catch((err)=>{
-              console.log(err)
-            });
-            
-            break;
-        }
-        case "range": {
-          // pull expenses by date range
-          break;
-        }
-        case "all": {
-          // pull all expenses
-          break;
-        }
-        default: {
-          console.log("Wrong filter provided");
-        }
-      }
+      getExpenses('month', expenseType.id)
+        .then((res)=>{
+          console.log(res.data.expenses)
+          setExpense((prevState)=>({...prevState, list: res.data.expenses}));
+        })
+        .catch((err)=>{
+          console.log(err)
+        });
     }
-  }, [modal])
+  }, [modal, expenseType.id])
   
   const uploadExpense = () => {
     if(cost !== ''){

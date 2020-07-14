@@ -1,12 +1,12 @@
 const axios = require('axios');
 
 const API = axios.create({
-  baseURL: 'http://localhost:8080/api',
   timeout: 15000,
 })
 
 export const setToken = (jwt) => {
   API.defaults.headers.common['auth'] = jwt;
+  return;
 };
 
 export const getTotal = (filter) => {

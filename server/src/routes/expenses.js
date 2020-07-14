@@ -7,6 +7,7 @@ const { isValidObjectId } = require('mongoose');
 
 const Expenses = require('../models/Expenses');
 const ExpenseTypes = require('../models/ExpenseTypes');
+const Categories = require('../models/Categories');
 
 router.get('/', validate, async (req, res) => {
 
@@ -19,7 +20,7 @@ router.get('/', validate, async (req, res) => {
     const expArr = [];
 
     exps.forEach((exp)=>{
-        expArr.push({ id: exp._id, cost: exp.cost, type: exp.type});
+        expArr.push({ id: exp._id, cost: exp.cost, type: exp.type, date: exp.date});
     })
 
     res.status(200).send({expenses: expArr});
@@ -35,6 +36,10 @@ router.post('/date/', validate, async (req, res) => {
     }
 
     let query = { user: req.auth._id };
+
+    if(body.type){
+        query.type = body.type;
+    }
 
     switch(body.filter){
         case 'month':{
@@ -75,7 +80,7 @@ router.post('/date/', validate, async (req, res) => {
     const expArr = [];
 
     exps.forEach((exp)=>{
-        expArr.push({ id: exp._id, cost: exp.cost, type: exp.type});
+        expArr.push({ id: exp._id, cost: exp.cost, type: exp.type, date: exp.date});
     })
 
     res.status(200).send({expenses: expArr});
@@ -97,7 +102,7 @@ router.get('/p/:id', validate, async (req, res) => {
         return;
     }
 
-    res.status(200).send({expense: { id: exp._id, cost: exp.cost, type: exp.type}});
+    res.status(200).send({expense: { id: exp._id, cost: exp.cost, type: exp.type, date: exp.date}});
 
 })
 
@@ -151,7 +156,7 @@ router.post('/', validate, async (req, res) => {
 
     newExp.save()
         .then((exp)=>{
-            res.status(200).send({expense: { id: exp._id, cost: exp.cost, type: exp.type}});
+            res.status(200).send({expense: { id: exp._id, cost: exp.cost, type: exp.type, date: new Date()}});
         })
         .catch((err)=>{
             res.status(400).send(err);
@@ -189,7 +194,7 @@ router.put('/p/:id', validate, async (req, res) => {
     updateExp.set(body);
     
     updateExp.save().then((exp)=>{
-        res.status(200).send({expense: { id: exp._id, cost: exp.cost, type: exp.type}});
+        res.status(200).send({expense: { id: exp._id, cost: exp.cost, type: exp.type, date: exp.date}});
     }).catch((err)=>{
         res.status(400).send(err);
     });

@@ -1,37 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container, Button } from 'react-bootstrap'
 
 import '../Styles/Home.css'
 
-import { getTotal } from '../Helpers/API'
 import CategoryBarModify from '../Components/CategoryBarModify';
 
 const Expenses = () => {
-
-  const [state, setState] = useState({
-    data: {},
-    error: false,
-    loading: true,
-  });
-
-  useEffect(()=>{
-    getTotal("month")
-      .then((res)=>{
-        setState({
-          data: res.data,
-          error: false,
-          loading: false,
-        });
-        console.log(res.data);
-      })
-      .catch((err)=>{
-        setState({
-          data: {},
-          error: true,
-          loading: false,
-        });
-      });
-  }, []);
 
   return (
     <Container className="bodyContainer">

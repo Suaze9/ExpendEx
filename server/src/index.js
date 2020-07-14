@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 
 
 const auth = require('./routes/auth');
+const users = require('./routes/users');
 const expenses = require('./routes/expenses');
 const categories = require('./routes/categories');
 const expenseTypes = require('./routes/expenseTypes');
@@ -26,6 +27,7 @@ const stats = require('./routes/stats');
 
 
 app.use('/api/auth', auth);
+app.use('/api/users', users);
 app.use('/api/expenses', expenses);
 app.use('/api/categories', categories);
 app.use('/api/expenseTypes', expenseTypes);

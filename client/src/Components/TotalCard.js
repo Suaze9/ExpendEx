@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Spinner, Accordion } from 'react-bootstrap'
+import { Card, Spinner } from 'react-bootstrap'
 import '../Styles/Home.css';
 
 

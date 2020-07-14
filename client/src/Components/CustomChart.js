@@ -14,6 +14,10 @@ const CustomChart = (props) => {
 
       let returnVal = [];
       const dates = exps.expenses;
+
+      if(!dates)
+        return[];
+
       const seriesData = dates.map((date)=>{
         return [date.date, date.total];
       });
