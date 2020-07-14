@@ -4,10 +4,9 @@ import { Container, Button } from 'react-bootstrap'
 import '../Styles/Home.css'
 
 import { getTotal } from '../Helpers/API'
-import TotalCard from '../Components/TotalCard';
-import CategoryBar from '../Components/CategoryBar';
+import CategoryBarModify from '../Components/CategoryBarModify';
 
-const Home = () => {
+const Expenses = () => {
 
   const [state, setState] = useState({
     data: {},
@@ -36,14 +35,13 @@ const Home = () => {
 
   return (
     <Container className="bodyContainer">
-      <h1>Home</h1>
-      <TotalCard state={state}/>
-      <CategoryBar/>
+      <h1>Expenses</h1>
+      <CategoryBarModify/>
       <Button className="addNewButton" href='/expenses'>
-        <h3>Manage Expenses</h3>
+        <h3>Add new Expense</h3>
       </Button>
     </Container>
   );
 };
 
-export default Home;
+export default Expenses;

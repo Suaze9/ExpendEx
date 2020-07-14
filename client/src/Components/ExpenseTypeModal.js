@@ -1,55 +1,84 @@
-import react, { useEffect, useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Modal, ModalTitle, ModalBody, ModalFooter, Table } from 'react-bootstrap'
+import { Modal, ModalTitle, ModalBody, ModalFooter, Table, Button, Form, FormGroup } from 'react-bootstrap'
+
+import { getExpenses, postExpense, deleteExpense } from '../Helpers/API';
+import ModalHeader from 'react-bootstrap/esm/ModalHeader';
+
+import '../Styles/CategoryBar.css';
 
 const defaultExpense = {
   filter: "month",
   list: []
 }
 
-/*
-  filter: (month) | range | all
-*/
-
-const expenseReducer = (state, action)=>{
-  switch(action.filter){
-    case "month": {
-      // pull expenses by month
-      break;
-    }
-    case "range": {
-      // pull expenses by date range
-      break;
-    }
-    case "all": {
-      // pull all expenses
-      break;
-    }
-    default: {
-      console.log("Wrong filter provided");
-    }
-  }
-}
-
 const ExpenseTypeModal = (props) => {
 
   const { expenseType, modal, toggleModal, resetModal } = props;
-  const [ expenses, dispatchExpenses ] = useReducer(expenseReducer, defaultExpense);
+  const [ expenses, setExpense ] = useState(defaultExpense);
+  const [ cost, setCost ] = useState('');
 
   useEffect(()=>{
     if(modal){
-      dispatchExpenses({
-        type: "month",
-      })
+      switch(expenses.filter){
+        case "month": {
+          
+          getExpenses('month', expenseType.id)
+            .then((res)=>{
+              console.log(res.data.expenses)
+              setExpense((prevState)=>({...prevState, list: res.data.expenses}));
+            })
+            .catch((err)=>{
+              console.log(err)
+            });
+            
+            break;
+        }
+        case "range": {
+          // pull expenses by date range
+          break;
+        }
+        case "all": {
+          // pull all expenses
+          break;
+        }
+        default: {
+          console.log("Wrong filter provided");
+        }
+      }
     }
   }, [modal])
+  
+  const uploadExpense = () => {
+    if(cost !== ''){
+      postExpense(expenseType.id, cost)
+      .then((res)=>{
+        const newList = expenses.list;
+        newList.push(res.data.expense);
+        setExpense((prevState)=>({...prevState, list: newList}));
+      })
+      .catch((err)=>{
+        console.log(err);
+      });
+    }
+  }
+
+  const delExp = (id) => {
+    deleteExpense(id)
+      .then(()=>{
+        window.location.reload();
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+  }
 
   return(
     <Modal
       size="lg"
-      isOpen={modal}
+      show={modal}
       toggle={toggleModal}
-      onClosed={resetModal}
+      onHide={resetModal}
     >
       <ModalHeader toggle={toggleModal}>{expenseType.name} Expenses</ModalHeader>
       <ModalBody>
@@ -57,16 +86,20 @@ const ExpenseTypeModal = (props) => {
           <tr>
             <th>Cost</th>
             <th>Date</th>
+            <th>Action</th>
           </tr>
-          {expenses && expenses.list && expenses.list.size > 0
+          {expenses && expenses.list
             ? expenses.list.map((exp)=>{
               return(
-                <tr onClick={alert(`clicked: ${expenseType.name} - ${exp.cost}`)}>
+                <tr>
                   <td>
                     {exp.cost}
                   </td>
                   <td>
-                    {exp.date}
+                    {new Date(exp.date).toString()}
+                  </td>
+                  <td>
+                    <Button onClick={()=>delExp(exp.id)}>Delete</Button>
                   </td>
                 </tr>
               )
@@ -74,6 +107,16 @@ const ExpenseTypeModal = (props) => {
             : <p> - </p>
           }
         </Table>
+        <Form className="formExpenses" onSubmit={(e)=>{
+          e.preventDefault();
+          uploadExpense()
+        }}>
+          <Button className="buttonExp" type="submit">Add new expense</Button>
+          <FormGroup className="formGroupM">
+            <label className="labelCost">Cost: </label>
+            <input className="inputCost" type="number" value={cost} onChange={(event)=>setCost(event.target.value)} />
+          </FormGroup>
+        </Form>
       </ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={toggleModal}>
